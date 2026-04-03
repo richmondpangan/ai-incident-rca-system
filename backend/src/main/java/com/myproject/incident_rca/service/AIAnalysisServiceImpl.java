@@ -71,34 +71,18 @@ public class AIAnalysisServiceImpl implements AIAnalysisService {
     }
 
     private AIAnalysis parseAndSaveSuccess(Long incidentId, String rawResponse) {
-
         try {
+            // GeminiClient already returns CLEAN JSON
+            JsonNode aiJson = objectMapper.readTree(rawResponse);
 
-            JsonNode root = objectMapper.readTree(rawResponse);
-
-            // Navigate Gemini structure
-            String text = root
-                    .path("candidates")
-                    .get(0)
-                    .path("content")
-                    .path("parts")
-                    .get(0)
-                    .path("text")
-                    .asText();
-
-            // Remove markdown ```json wrapper
-            text = text.replace("```json", "")
-                    .replace("```", "")
-                    .trim();
-
-            // Parse actual structured JSON
-            JsonNode aiJson = objectMapper.readTree(text);
+            //System.out.println("===== PARSED AI JSON =====");
+            //System.out.println(aiJson.toPrettyString());
 
             AIAnalysis analysis = new AIAnalysis();
             analysis.setIncidentId(incidentId);
             analysis.setSummary(aiJson.path("summary").asText());
             analysis.setProbableRootCause(aiJson.path("probable_root_cause").asText());
-            analysis.setSuggestedRemediation(aiJson.path("suggested_remediation").toString());
+            analysis.setSuggestedRemediation(getSuggestedRemediation(aiJson));
             analysis.setConfidenceScore(aiJson.path("confidence_score").asInt());
             analysis.setRawResponse(rawResponse);
             analysis.setModelName(geminiProperties.getModel());
@@ -108,7 +92,19 @@ public class AIAnalysisServiceImpl implements AIAnalysisService {
         } catch(Exception ex) {
             throw new RuntimeException("Failed to parse Gemini response", ex);
         }
-
     }
 
+    private String getSuggestedRemediation(JsonNode json) {
+        JsonNode node = json.get("suggested_remediation");
+
+        if (node != null && node.isArray()) {
+            StringBuilder sb = new StringBuilder();
+            for (JsonNode item : node) {
+                sb.append("- ").append(item.asText()).append("\n");
+            }
+            return sb.toString();
+        }
+
+        return node != null ? node.asText() : "";
+    }
 }
