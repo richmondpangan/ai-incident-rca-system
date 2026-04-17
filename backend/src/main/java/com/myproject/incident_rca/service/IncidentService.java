@@ -13,5 +13,7 @@ public interface IncidentService {
 
     List<Incident> getAllIncidents();
 
-    Page<Incident> getIncidents(String serviceName, String severity, String fromDate, String toDate, Pageable pageable);
+    Page<Incident> getIncidents(String serviceName, String severity, String status, String fromDate, String toDate, Pageable pageable);
+
+    Incident getIncidentById(Long id);
 }
