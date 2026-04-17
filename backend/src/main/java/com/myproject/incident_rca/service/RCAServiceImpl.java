@@ -82,7 +82,7 @@ public class RCAServiceImpl implements RCAService {
     @Transactional
     public RCAResponse updateRCA(Long rcaId, RCAResponse request) {
 
-        RCADocument rca = rcaRepository.findById(rcaId)
+        RCADocument rca = rcaRepository.findByIncidentId(rcaId)
                 .orElseThrow(() -> new RuntimeException("RCA not found"));
 
         rca.setProblemStatement(request.getProblemStatement());
