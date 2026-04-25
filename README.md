@@ -65,7 +65,7 @@ This system is implemented as a **monolithic full-stack application**:
 
 ---
 
-## 🧱 Tech Stack
+## Tech Stack
 
 ### Backend
 - Java 17
@@ -88,7 +88,7 @@ This system is implemented as a **monolithic full-stack application**:
 
 ---
 
-## 🔁 System Workflow
+## System Workflow
 
 1. System receives an incident → stored as **OPEN**
 2. AI analysis is triggered (optional)
