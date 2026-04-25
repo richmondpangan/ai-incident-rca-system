@@ -3,16 +3,13 @@ package com.myproject.incident_rca.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
-
-import lombok.Builder;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 @Builder
+@Getter
+@Setter
 public class RCAResponse {
 
     private Long incidentId;

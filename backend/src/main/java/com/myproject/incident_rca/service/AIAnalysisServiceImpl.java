@@ -107,4 +107,16 @@ public class AIAnalysisServiceImpl implements AIAnalysisService {
 
         return node != null ? node.asText() : "";
     }
+
+    @Override
+    public AIAnalysisResponse getLatestAnalysis(Long incidentId) {
+
+        AIAnalysis analysis = aiAnalysisRepository
+                .findTopByIncidentIdOrderByCreatedAtDesc(incidentId)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("No AI analysis found for incident: " + incidentId)
+                );
+
+        return AIAnalysisResponse.from(analysis);
+    }
 }

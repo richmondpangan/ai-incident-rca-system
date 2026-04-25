@@ -4,10 +4,7 @@ import com.myproject.incident_rca.dto.AIAnalysisResponse;
 import com.myproject.incident_rca.service.AIAnalysisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/incidents")
@@ -19,6 +16,13 @@ public class IncidentAnalysisController {
     @PostMapping("/{id}/analyze")
     public ResponseEntity<AIAnalysisResponse> analyzeIncident(@PathVariable Long id) {
         AIAnalysisResponse response = aiAnalysisService.analyzeIncident(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}/analysis")
+    public ResponseEntity<AIAnalysisResponse> getLatestAnalysis(@PathVariable Long id) {
+
+        AIAnalysisResponse response = aiAnalysisService.getLatestAnalysis(id);
         return ResponseEntity.ok(response);
     }
 

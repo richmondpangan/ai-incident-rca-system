@@ -1,6 +1,7 @@
 package com.myproject.incident_rca.repository;
 
 import com.myproject.incident_rca.model.Incident;
+import com.myproject.incident_rca.model.IncidentStatus;
 import com.myproject.incident_rca.model.Severity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,23 @@ public interface IncidentRepository extends JpaRepository<Incident, Long> {
     // Without severity filter
     Page<Incident> findAllByServiceNameContainingIgnoreCaseAndCreatedAtBetween(
             String serviceName,
+            LocalDateTime from,
+            LocalDateTime to,
+            Pageable pageable
+    );
+
+    Page<Incident> findAllByServiceNameContainingIgnoreCaseAndStatusAndCreatedAtBetween(
+            String serviceName,
+            IncidentStatus status,
+            LocalDateTime from,
+            LocalDateTime to,
+            Pageable pageable
+    );
+
+    Page<Incident> findAllByServiceNameContainingIgnoreCaseAndSeverityAndStatusAndCreatedAtBetween(
+            String serviceName,
+            Severity severity,
+            IncidentStatus status,
             LocalDateTime from,
             LocalDateTime to,
             Pageable pageable

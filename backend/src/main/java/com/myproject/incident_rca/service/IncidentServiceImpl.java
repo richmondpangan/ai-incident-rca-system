@@ -56,7 +56,7 @@ public class IncidentServiceImpl implements IncidentService {
     }
 
     @Override
-    public Page<Incident> getIncidents(String serviceName, String severityStr, String fromDate, String toDate, Pageable pageable) {
+    public Page<Incident> getIncidents(String serviceName, String severityStr, String statusStr, String fromDate, String toDate, Pageable pageable) {
 
         // findAll
         //Page<Incident> incidents = incidentRepository.findAll(pageable);
@@ -77,17 +77,41 @@ public class IncidentServiceImpl implements IncidentService {
             severityFilter = Severity.valueOf(severityStr.toUpperCase());
         }
 
-        // Call repository based on whether severity is provided
-        if (severityFilter != null) {
-            return incidentRepository.findAllByServiceNameContainingIgnoreCaseAndSeverityAndCreatedAtBetween(
-                    svcNameFilter, severityFilter, from, to, pageable
-            );
-        } else {
-            return incidentRepository.findAllByServiceNameContainingIgnoreCaseAndCreatedAtBetween(
-                    svcNameFilter, from, to, pageable
-            );
+        // Status filter
+        IncidentStatus statusFilter = null;
+        if (statusStr != null && !statusStr.isBlank()) {
+            statusFilter = IncidentStatus.valueOf(statusStr.toUpperCase());
         }
 
+        // Call repository based on whether severity is provided
+        if (severityFilter != null && statusFilter != null) {
+            return incidentRepository
+                    .findAllByServiceNameContainingIgnoreCaseAndSeverityAndStatusAndCreatedAtBetween(
+                            svcNameFilter, severityFilter, statusFilter, from, to, pageable
+                    );
+        } else if (severityFilter != null) {
+            return incidentRepository
+                    .findAllByServiceNameContainingIgnoreCaseAndSeverityAndCreatedAtBetween(
+                            svcNameFilter, severityFilter, from, to, pageable
+                    );
+        } else if (statusFilter != null) {
+            return incidentRepository
+                    .findAllByServiceNameContainingIgnoreCaseAndStatusAndCreatedAtBetween(
+                            svcNameFilter, statusFilter, from, to, pageable
+                    );
+        } else {
+            return incidentRepository
+                    .findAllByServiceNameContainingIgnoreCaseAndCreatedAtBetween(
+                            svcNameFilter, from, to, pageable
+                    );
+        }
+
+    }
+
+    @Override
+    public Incident getIncidentById(Long id) {
+        return incidentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Incident not found"));
     }
 
 }

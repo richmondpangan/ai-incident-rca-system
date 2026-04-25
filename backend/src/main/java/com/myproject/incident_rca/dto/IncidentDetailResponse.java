@@ -1,28 +1,31 @@
 package com.myproject.incident_rca.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-public class IncidentResponse {
+public class IncidentDetailResponse {
     private Long id;
     private String serviceName;
     private String severity;
     private String errorMessage;
+    private List<String> logs;
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime resolvedAt;
 
     // Constructors
-    public IncidentResponse(Long id, String serviceName, String severity, String errorMessage, String status, LocalDateTime createdAt, LocalDateTime resolvedAt) {
+    public IncidentDetailResponse(Long id, String serviceName, String severity, String errorMessage, List<String> logs, String status, LocalDateTime createdAt, LocalDateTime resolvedAt) {
         this.id = id;
         this.serviceName = serviceName;
         this.severity = severity;
         this.errorMessage = errorMessage;
+        this.logs = logs;
         this.status = status;
         this.createdAt = createdAt;
         this.resolvedAt = resolvedAt;
     }
 
-    // Getters only (immutable response)
+    // Getters
 
     public Long getId() {
         return id;
@@ -38,6 +41,10 @@ public class IncidentResponse {
 
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    public List<String> getLogs() {
+        return logs;
     }
 
     public String getStatus() {
