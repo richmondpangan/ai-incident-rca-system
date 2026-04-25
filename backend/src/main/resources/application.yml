@@ -11,3 +11,9 @@ spring:
 
   flyway:
     enabled: true
+
+gemini:
+  api-key: ${GEMINI_API_KEY}
+  model: gemini-2.5-flash
+  base-url: https://generativelanguage.googleapis.com/v1beta
+  timeout-seconds: 20
