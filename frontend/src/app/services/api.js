@@ -3,7 +3,8 @@ import axios from 'axios';
 // Create axios instance with base configuration
 const api = axios.create({
   //baseURL: process.env.REACT_APP_API_URL || 'http://localhost:3000/api',
-  baseURL: 'http://localhost:8080/api',
+  // baseURL: 'http://localhost:8080/api', // local testing
+  baseURL: import.meta.env.VITE_API_URL, // deployment
   //timeout: 10000,
   timeout: 50000, // increased timeout
   headers: {
