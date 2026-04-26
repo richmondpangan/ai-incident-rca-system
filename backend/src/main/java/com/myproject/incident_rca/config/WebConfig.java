@@ -14,7 +14,8 @@ public class WebConfig {
             public void addCorsMappings(CorsRegistry registry) {
 
                 registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:5173") // your frontend
+                        //.allowedOrigins("http://localhost:5173") // for local setup
+                        .allowedOrigins("*") // deployed setup
                         .allowedMethods("*")
                         .allowedHeaders("*");
             }
