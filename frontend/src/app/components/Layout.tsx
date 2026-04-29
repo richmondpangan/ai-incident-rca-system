@@ -60,7 +60,7 @@ export function Layout() {
           </Sheet>
 
           <div className="flex flex-1 items-center justify-between min-w-0">
-            <h1 className="text-base sm:text-xl font-semibold truncate">AI Analysis RCA System</h1>
+            <h1 className="text-base sm:text-xl font-semibold truncate">AI-Assisted Incident Analysis & RCA System</h1>
             <div className="flex items-center gap-2">
               <div className="hidden sm:flex items-center gap-2 text-xs sm:text-sm text-gray-600">
                 <div className="h-2 w-2 rounded-full bg-green-500 flex-shrink-0"></div>
