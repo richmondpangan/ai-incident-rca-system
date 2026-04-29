@@ -12,6 +12,13 @@ This project is a **full-stack AI-assisted incident management system** that hel
 
 ---
 
+## Live Demo
+
+- Frontend: https://ai-incident-rca-system.vercel.app/
+- Backend API: https://ai-incident-rca-system.onrender.com
+
+---
+
 ## Key Features
 
 ### Incident Management
